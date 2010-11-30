@@ -1,0 +1,71 @@
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+    
+" Настройка pathogen
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+    
+" Включаем цветовую схему Zenburn
+if has("gui_running") || has("unix")
+    :set t_Co=256
+    :colors zenburn
+    :colorscheme zenburn
+else
+    :colors impact
+    :colorscheme impact
+endif
+
+" Задаем шрифт
+if has("gui_running")
+    if has("gui_gtk2")
+        :set guifont=Monaco\ 11
+    elseif has("x11")
+       " Also for GTK 1
+        :set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
+    elseif has("gui_win32")
+        :set guifont=Consolas:h11:cRUSSIAN
+    endif
+endif
+
+" Переключение кодировки файла через меню по S-F8
+set wildmenu
+set wcm=<Tab>
+menu Encoding.koi8-u :e ++enc=8bit-koi8-u<CR>
+menu Encoding.windows-1251 :e ++enc=8bit-cp1251<CR>
+menu Encoding.ibm-866 :e ++enc=8bit-ibm866<CR>
+menu Encoding.utf-8 :e ++enc=2byte-utf-8 <CR>
+map <S-F8> :emenu Encoding.<TAB>
+
+" Размер табуляции по умолчанию. Замена Tab на Space
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+
+" Включить авто отступы
+set autoindent
+
+" Включаем "умные" отступы ( например, авто отступ после {)
+set smartindent
+set cindent
+
+" Set the textwidth to be 110 chars
+set textwidth=100
+
+" не разрывать не вмещающуюся в окно строку
+set nowrap
+
+" Игнорирование прописных/строчных букв при поиске
+set ignorecase
+
+" Поиск по набору текста (очень полезная функция)
+set incsearch
+
+" Поиск и замена слова под курсором
+nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
+
+" Количество столбцов отдаваемых под отображение фолдов
+set foldcolumn=1
+set foldnestmax=3
